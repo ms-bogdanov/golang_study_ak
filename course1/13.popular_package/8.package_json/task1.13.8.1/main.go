@@ -3,13 +3,13 @@ package main
 import "encoding/json"
 
 type User struct {
-	Name     string
-	Age      int
-	Comments []Comment
+	Name     string    `json:"name"`
+	Age      int       `json:"age"`
+	Comments []Comment `json:"comments"`
 }
 
 type Comment struct {
-	Text string
+	Text string `json:"text"`
 }
 
 func getJSON(data []User) (string, error) {
