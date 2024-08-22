@@ -13,6 +13,7 @@ require (
 	github.com/google/go-github/v53 v53.2.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/icrowley/fake v0.0.0-20240710202011-f797eb4a99c0 // indirect
+	github.com/jarcoal/httpmock v1.3.1 // indirect
 	github.com/ksrof/gocolors v0.1.0 // indirect
 	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
