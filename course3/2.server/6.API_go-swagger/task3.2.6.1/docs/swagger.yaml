@@ -1,0 +1,73 @@
+basePath: /
+definitions:
+  main.RequestAddressSearch:
+    properties:
+      query:
+        type: string
+    type: object
+  main.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Simple GeoService.
+  title: GeoService
+  version: "1.0"
+paths:
+  /api/address/geocode:
+    post:
+      consumes:
+      - application/json
+      description: Search city Name by coords
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.errorResponse'
+      summary: SearchCity
+      tags:
+      - Search
+  /api/address/search:
+    post:
+      consumes:
+      - application/json
+      description: Search city Name by coords
+      parameters:
+      - description: Lattitude and Longitude
+        in: body
+        name: coordinates
+        required: true
+        schema:
+          $ref: '#/definitions/main.RequestAddressSearch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.errorResponse'
+      summary: SearchCity
+      tags:
+      - Search
+swagger: "2.0"
