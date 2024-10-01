@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/jwtauth"
 
+	metrics "geoservice/internal/metrics"
 	service "geoservice/internal/service"
 	models "geoservice/models"
 )
@@ -49,6 +51,7 @@ type Responder interface {
 // @Failure 500 {object} models.ErrorResponce
 // @Router /api/register [post]
 func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
+	startTime := time.Now()
 	var newUser models.User
 
 	if err := json.NewDecoder(r.Body).Decode(&newUser); err != nil {
@@ -62,6 +65,9 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	duration := time.Since(startTime).Seconds()
+	metrics.RegisterDurationCounter.Observe(duration)
+	metrics.RegisterCounter.Inc()
 	message := fmt.Sprintf("User %s sucessfully created", newUser.Username)
 	w.WriteHeader(status)
 	w.Write([]byte(message))
@@ -79,6 +85,7 @@ func (c *Controller) RegisterUser(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} models.ErrorResponce
 // @Router /api/login [post]
 func (c *Controller) LoginUser(w http.ResponseWriter, r *http.Request) {
+	startTime := time.Now()
 	var user models.User
 
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
@@ -92,6 +99,9 @@ func (c *Controller) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	duration := time.Since(startTime).Seconds()
+	metrics.LoginDurationCounter.Observe(duration)
+	metrics.LoginCounter.Inc()
 	w.WriteHeader(status)
 	w.Write([]byte(tokenString))
 }
